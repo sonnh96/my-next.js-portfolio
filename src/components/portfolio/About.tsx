@@ -1,5 +1,7 @@
 import { MapPin, Languages, Briefcase, Calendar } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { cn } from "@/lib/utils";
 
 const stats = [
   { label: "Years Experience", value: "5+", icon: Calendar },
@@ -14,10 +16,18 @@ const info = [
 ];
 
 export const About = () => {
+  const { ref, isVisible } = useScrollReveal({ threshold: 0.1 });
+
   return (
     <section id="about" className="py-24 bg-secondary/30">
       <div className="container px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
+        <div 
+          ref={ref}
+          className={cn(
+            "max-w-6xl mx-auto transition-all duration-700",
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          )}
+        >
           {/* Section header */}
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">About Me</h2>
@@ -57,8 +67,15 @@ export const About = () => {
 
             {/* Right: Stats */}
             <div className="grid grid-cols-3 gap-4">
-              {stats.map((stat) => (
-                <Card key={stat.label} className="text-center border-border/50 bg-background/50 hover:border-primary/50 transition-colors">
+              {stats.map((stat, index) => (
+                <Card 
+                  key={stat.label} 
+                  className={cn(
+                    "text-center border-border/50 bg-background/50 hover:border-primary/50 transition-all duration-500",
+                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                  )}
+                  style={{ transitionDelay: `${index * 100 + 200}ms` }}
+                >
                   <CardContent className="pt-6 pb-6">
                     <stat.icon className="w-8 h-8 text-primary mx-auto mb-3" />
                     <p className="text-3xl sm:text-4xl font-bold text-foreground mb-1">{stat.value}</p>

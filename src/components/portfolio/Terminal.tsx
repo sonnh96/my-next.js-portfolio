@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const commands = [
   {
@@ -36,9 +37,18 @@ export const Terminal = () => {
   const [typedInput, setTypedInput] = useState("");
   const [showOutput, setShowOutput] = useState(false);
   const [history, setHistory] = useState<typeof commands>([]);
+  const [hasStarted, setHasStarted] = useState(false);
+  const { ref, isVisible } = useScrollReveal({ threshold: 0.3 });
+
+  // Start animation when visible
+  useEffect(() => {
+    if (isVisible && !hasStarted) {
+      setHasStarted(true);
+    }
+  }, [isVisible, hasStarted]);
 
   useEffect(() => {
-    if (currentCommand >= commands.length) return;
+    if (!hasStarted || currentCommand >= commands.length) return;
 
     const command = commands[currentCommand];
     let inputIndex = 0;
@@ -62,12 +72,18 @@ export const Terminal = () => {
     }, 80);
 
     return () => clearInterval(typeInterval);
-  }, [currentCommand]);
+  }, [currentCommand, hasStarted]);
 
   return (
     <section id="terminal" className="py-24 bg-secondary/30">
       <div className="container px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
+        <div 
+          ref={ref}
+          className={cn(
+            "max-w-4xl mx-auto transition-all duration-700",
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          )}
+        >
           {/* Section header */}
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">Terminal</h2>
@@ -75,7 +91,12 @@ export const Terminal = () => {
           </div>
 
           {/* Terminal window */}
-          <div className="rounded-xl overflow-hidden border border-border shadow-2xl">
+          <div 
+            className={cn(
+              "rounded-xl overflow-hidden border border-border shadow-2xl transition-all duration-700 delay-200",
+              isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
+            )}
+          >
             {/* Terminal header */}
             <div className="bg-secondary px-4 py-3 flex items-center gap-2">
               <div className="flex gap-2">
@@ -100,7 +121,7 @@ export const Terminal = () => {
               ))}
 
               {/* Current command */}
-              {currentCommand < commands.length && (
+              {currentCommand < commands.length && hasStarted && (
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="text-terminal-foreground">❯</span>
@@ -115,8 +136,16 @@ export const Terminal = () => {
                 </div>
               )}
 
+              {/* Initial state before animation starts */}
+              {!hasStarted && (
+                <div className="flex items-center gap-2">
+                  <span className="text-terminal-foreground">❯</span>
+                  <span className="animate-blink text-terminal-foreground">█</span>
+                </div>
+              )}
+
               {/* Completed state */}
-              {currentCommand >= commands.length && (
+              {currentCommand >= commands.length && hasStarted && (
                 <div className="flex items-center gap-2">
                   <span className="text-terminal-foreground">❯</span>
                   <span className="animate-blink text-terminal-foreground">█</span>

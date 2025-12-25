@@ -1,6 +1,8 @@
-import { ExternalLink, Github, Layers } from "lucide-react";
+import { Layers } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { cn } from "@/lib/utils";
 
 const projects = [
   {
@@ -48,12 +50,19 @@ const projects = [
 ];
 
 export const Projects = () => {
+  const { ref, isVisible } = useScrollReveal({ threshold: 0.1 });
+
   return (
     <section id="projects" className="py-24">
       <div className="container px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
+        <div ref={ref} className="max-w-6xl mx-auto">
           {/* Section header */}
-          <div className="text-center mb-16">
+          <div 
+            className={cn(
+              "text-center mb-16 transition-all duration-700",
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+            )}
+          >
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">Featured Projects</h2>
             <div className="w-20 h-1 bg-primary mx-auto rounded-full mb-4" />
             <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -66,8 +75,11 @@ export const Projects = () => {
             {projects.map((project, index) => (
               <Card
                 key={project.title}
-                className="group border-border/50 bg-card/50 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 animate-fade-in opacity-0"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                className={cn(
+                  "group border-border/50 bg-card/50 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 transition-all duration-500",
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                )}
+                style={{ transitionDelay: `${index * 100 + 200}ms` }}
               >
                 <CardHeader className="pb-4">
                   <div className="flex items-start justify-between">
