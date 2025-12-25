@@ -4,7 +4,7 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { cn } from "@/lib/utils";
 
 const stats = [
-  { label: "Years Experience", value: "5+", icon: Calendar },
+  { label: "Years Experience", value: "7+", icon: Calendar },
   { label: "Projects Delivered", value: "10+", icon: Briefcase },
   { label: "Cloud Platforms", value: "3", icon: Languages },
 ];
@@ -12,8 +12,7 @@ const stats = [
 const info = [
   { icon: MapPin, label: "Location", value: "Hanoi, Vietnam" },
   { icon: Languages, label: "Languages", value: "Vietnamese, English, Japanese" },
-  { icon: Briefcase, label: "Company", value: "AIMENEXT" },
-];
+  { icon: Briefcase, label: "Technical Leader", value: "Picontechnology" },];
 
 export const About = () => {
   const { ref, isVisible } = useScrollReveal({ threshold: 0.1 });
@@ -38,8 +37,8 @@ export const About = () => {
             {/* Left: Bio */}
             <div className="space-y-6">
               <p className="text-lg text-muted-foreground leading-relaxed">
-                I'm a <span className="text-foreground font-medium">Technical Leader</span> at AIMENEXT 
-                with over 5 years of experience in software development and system architecture.
+                I'm a <span className="text-foreground font-medium">Technical Leader</span> 
+                with over 7 years of experience in software development and system architecture.
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed">
                 I specialize in building scalable backend systems using <span className="text-primary font-medium">Python, Node.js, 

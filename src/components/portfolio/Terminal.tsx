@@ -8,8 +8,7 @@ const commands = [
     output: `{
   "name": "Nguyen Hong Son",
   "role": "Technical Leader",
-  "company": "AIMENEXT",
-  "experience": "5+ years",
+  "experience": "7+ years",
   "location": "Hanoi, Vietnam"
 }`,
   },
