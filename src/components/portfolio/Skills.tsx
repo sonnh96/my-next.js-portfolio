@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 type SkillCategory = "languages" | "frameworks" | "databases" | "cloud";
 
@@ -54,11 +55,18 @@ const skillCategories = {
 
 export const Skills = () => {
   const [activeCategory, setActiveCategory] = useState<SkillCategory>("languages");
+  const { ref, isVisible } = useScrollReveal({ threshold: 0.1 });
 
   return (
     <section id="skills" className="py-24">
       <div className="container px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
+        <div 
+          ref={ref}
+          className={cn(
+            "max-w-4xl mx-auto transition-all duration-700",
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          )}
+        >
           {/* Section header */}
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">Skills & Expertise</h2>
@@ -88,8 +96,11 @@ export const Skills = () => {
             {skillCategories[activeCategory].skills.map((skill, index) => (
               <div
                 key={skill.name}
-                className="space-y-2 animate-fade-in opacity-0"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                className={cn(
+                  "space-y-2 transition-all duration-500",
+                  isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"
+                )}
+                style={{ transitionDelay: `${index * 100}ms` }}
               >
                 <div className="flex justify-between items-center">
                   <span className="font-medium">{skill.name}</span>
@@ -98,7 +109,7 @@ export const Skills = () => {
                 <div className="h-2 bg-secondary rounded-full overflow-hidden">
                   <div
                     className="h-full bg-primary rounded-full transition-all duration-1000 ease-out"
-                    style={{ width: `${skill.level}%` }}
+                    style={{ width: isVisible ? `${skill.level}%` : "0%" }}
                   />
                 </div>
               </div>

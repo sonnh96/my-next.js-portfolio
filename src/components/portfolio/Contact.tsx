@@ -1,6 +1,8 @@
-import { Send, MapPin, Mail, ExternalLink } from "lucide-react";
+import { Send, MapPin, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { cn } from "@/lib/utils";
 
 const contactInfo = [
   {
@@ -18,10 +20,18 @@ const contactInfo = [
 ];
 
 export const Contact = () => {
+  const { ref, isVisible } = useScrollReveal({ threshold: 0.2 });
+
   return (
     <section id="contact" className="py-24 bg-secondary/30">
       <div className="container px-4 sm:px-6 lg:px-8">
-        <div className="max-w-2xl mx-auto">
+        <div 
+          ref={ref}
+          className={cn(
+            "max-w-2xl mx-auto transition-all duration-700",
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          )}
+        >
           {/* Section header */}
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">Get In Touch</h2>
@@ -32,7 +42,12 @@ export const Contact = () => {
           </div>
 
           {/* Contact card */}
-          <Card className="border-border/50 bg-card/50">
+          <Card 
+            className={cn(
+              "border-border/50 bg-card/50 transition-all duration-700 delay-200",
+              isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
+            )}
+          >
             <CardContent className="p-8">
               {/* Terminal-style status */}
               <div className="mb-8 p-4 rounded-lg bg-terminal font-mono text-sm">
@@ -44,10 +59,14 @@ export const Contact = () => {
 
               {/* Contact methods */}
               <div className="space-y-4 mb-8">
-                {contactInfo.map((contact) => (
+                {contactInfo.map((contact, index) => (
                   <div
                     key={contact.label}
-                    className="flex items-center justify-between p-4 rounded-lg bg-secondary/50 hover:bg-secondary transition-colors"
+                    className={cn(
+                      "flex items-center justify-between p-4 rounded-lg bg-secondary/50 hover:bg-secondary transition-all duration-500",
+                      isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"
+                    )}
+                    style={{ transitionDelay: `${index * 100 + 400}ms` }}
                   >
                     <div className="flex items-center gap-4">
                       <div className="p-2 rounded-lg bg-primary/10 text-primary">
