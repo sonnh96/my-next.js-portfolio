@@ -61,18 +61,18 @@ export const Hero = () => {
       <div className="container relative z-10 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           {/* Greeting */}
-          <p className="text-muted-foreground text-lg mb-4 animate-fade-in opacity-0" style={{ animationDelay: "0.2s" }}>
+          <p className="text-muted-foreground text-lg mb-4">
             Hello, I'm
           </p>
           
           {/* Name */}
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 animate-fade-in opacity-0" style={{ animationDelay: "0.4s" }}>
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6">
             <span className="text-foreground">Nguyen Hong </span>
             <span className="text-primary">Son</span>
           </h1>
           
           {/* Typewriter role */}
-          <div className="h-12 sm:h-14 flex items-center justify-center mb-8 animate-fade-in opacity-0" style={{ animationDelay: "0.6s" }}>
+          <div className="h-12 sm:h-14 flex items-center justify-center mb-8">
             <span className="text-xl sm:text-2xl md:text-3xl text-muted-foreground">
               {displayText}
               <span className="animate-blink text-primary">|</span>
@@ -80,13 +80,13 @@ export const Hero = () => {
           </div>
           
           {/* Description */}
-          <p className="text-muted-foreground text-lg sm:text-xl max-w-2xl mx-auto mb-12 animate-fade-in opacity-0" style={{ animationDelay: "0.8s" }}>
+          <p className="text-muted-foreground text-lg sm:text-xl max-w-2xl mx-auto mb-12">
             5+ years of experience building scalable systems, leading technical teams, 
             and delivering AI-powered solutions at AIMENEXT.
           </p>
           
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in opacity-0" style={{ animationDelay: "1s" }}>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" onClick={scrollToProjects} className="gap-2">
               <FolderOpen className="w-5 h-5" />
               View Projects
